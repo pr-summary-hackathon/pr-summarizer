@@ -43,6 +43,19 @@ app.post('/factorial', (req, res) => {
   res.json({ result });
 });
 
+// Factorial2
+app.post('/factorial2', (req, res) => {
+  const { n } = req.body;
+  if (n < 0 || !Number.isInteger(n)) {
+    return res.status(400).json({ error: 'n must be a non-negative integer' });
+  }
+  let result = 1;
+  for (let i = 2; i <= n; i++) {
+    result *= i;
+  }
+  res.json({ result });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Math app listening on port ${PORT}`);
