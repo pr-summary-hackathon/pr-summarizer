@@ -47,7 +47,7 @@ app.post('/factorial', (req, res) => {
 app.post('/factorial2', (req, res) => {
   const { n } = req.body;
   if (n < 0 || !Number.isInteger(n)) {
-    return res.status(400).json({ error: 'n must be a non-negative integer' });
+    return res.status(400).json({ error: 'n must be a non-negative integer 2' });
   }
   let result = 1;
   for (let i = 2; i <= n; i++) {
