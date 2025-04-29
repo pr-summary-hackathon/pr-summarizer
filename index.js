@@ -10,12 +10,6 @@ app.post('/add', (req, res) => {
   res.json({ result: a + b });
 });
 
-// UUID Endpoint
-app.get('/uuid', (req, res) => {
-  const uuid = uuidv4(); // Genera un UUID
-  res.json({ uuid });
-});
-
 // Subtraction
 app.post('/subtract', (req, res) => {
   const { a, b } = req.body;
