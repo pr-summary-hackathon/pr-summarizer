@@ -2,12 +2,40 @@ const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const app = express();
 
+// Configuración de multer para subir imágenes
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Carpeta donde se guardarán las imágenes
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+const upload = multer({ storage });
+
 app.use(express.json());
 
 // Addition
 app.post('/add', (req, res) => {
   const { a, b } = req.body;
   res.json({ result: a + b });
+});
+
+// Endpoint para obtener un UUID
+app.get('/uuid', (req, res) => {
+  const uuid = uuidv4();
+  res.json({ uuid });
+});
+
+// Endpoint para subir una imagen de un gato
+app.post('/upload-cat', upload.single('catImage'), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ error: 'No se subió ninguna imagen' });
+  }
+  res.json({
+    message: 'Imagen subida con éxito',
+    filePath: path.join('uploads', req.file.filename)
+  });
 });
 
 // UUID Endpoint
