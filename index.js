@@ -4,11 +4,51 @@ const app = express();
 
 app.use(express.json());
 
+// Create a router for math operations
+const mathRouter = express.Router();
+
 // Addition
-app.post('/add', (req, res) => {
+mathRouter.post('/add', (req, res) => {
   const { a, b } = req.body;
   res.json({ result: a + b });
 });
+
+// Subtraction
+mathRouter.post('/subtract', (req, res) => {
+  const { a, b } = req.body;
+  res.json({ result: a - b });
+});
+
+// Multiplication
+mathRouter.post('/multiply', (req, res) => {
+  const { a, b } = req.body;
+  res.json({ result: a * b });
+});
+
+// Division
+mathRouter.post('/divide', (req, res) => {
+  const { a, b } = req.body;
+  if (b === 0) {
+    return res.status(400).json({ error: 'Division by zero' });
+  }
+  res.json({ result: a / b });
+});
+
+// Factorial
+mathRouter.post('/factorial', (req, res) => {
+  const { n } = req.body;
+  if (n < 0 || !Number.isInteger(n)) {
+    return res.status(400).json({ error: 'n must be a non-negative integer' });
+  }
+  let result = 1;
+  for (let i = 2; i <= n; i++) {
+    result *= i;
+  }
+  res.json({ result });
+});
+
+// Mount the math router
+app.use('/math', mathRouter);
 
 // UUID Endpoint
 app.get('/uuid', (req, res) => {
@@ -24,40 +64,6 @@ app.get('/hello', (req, res) => {
 // Time Endpoint
 app.get('/time', (req, res) => {
   res.json({ currentTime: new Date().toISOString() });
-});
-
-// Subtraction
-app.post('/subtract', (req, res) => {
-  const { a, b } = req.body;
-  res.json({ result: a - b });
-});
-
-// Multiplication
-app.post('/multiply', (req, res) => {
-  const { a, b } = req.body;
-  res.json({ result: a * b });
-});
-
-// Division
-app.post('/divide', (req, res) => {
-  const { a, b } = req.body;
-  if (b === 0) {
-    return res.status(400).json({ error: 'Division by zero' });
-  }
-  res.json({ result: a / b });
-});
-
-// Factorial
-app.post('/factorial', (req, res) => {
-  const { n } = req.body;
-  if (n < 0 || !Number.isInteger(n)) {
-    return res.status(400).json({ error: 'n must be a non-negative integer' });
-  }
-  let result = 1;
-  for (let i = 2; i <= n; i++) {
-    result *= i;
-  }
-  res.json({ result });
 });
 
 const PORT = process.env.PORT || 3000;
