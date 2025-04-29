@@ -16,6 +16,16 @@ app.get('/uuid', (req, res) => {
   res.json({ uuid });
 });
 
+// Hello Endpoint
+app.get('/hello', (req, res) => {
+  res.json({ message: 'Hello, audience!' });
+});
+
+// Time Endpoint
+app.get('/time', (req, res) => {
+  res.json({ currentTime: new Date().toISOString() });
+});
+
 // Subtraction
 app.post('/subtract', (req, res) => {
   const { a, b } = req.body;
