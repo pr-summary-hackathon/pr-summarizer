@@ -1,4 +1,5 @@
 const express = require('express');
+const { v4: uuidv4 } = require('uuid');
 const app = express();
 
 app.use(express.json());
@@ -7,6 +8,12 @@ app.use(express.json());
 app.post('/add', (req, res) => {
   const { a, b } = req.body;
   res.json({ result: a + b });
+});
+
+// UUID Endpoint
+app.get('/uuid', (req, res) => {
+  const uuid = uuidv4(); // Genera un UUID
+  res.json({ uuid });
 });
 
 // Subtraction
@@ -46,4 +53,4 @@ app.post('/factorial', (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Math app listening on port ${PORT}`);
-}); 
+});
